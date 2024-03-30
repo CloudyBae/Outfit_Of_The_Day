@@ -51,7 +51,7 @@ Resources:
 ###############
 #  DynamoDb  #
 ###############
-  TripSageDdbTableDev:
+  OotdDdbTableDev:
     Type: AWS::DynamoDB::Table
     Condition: IsDev
     DeletionPolicy: Retain
@@ -95,7 +95,7 @@ Resources:
           Projection:
             ProjectionType: ALL
 
-  TripSageDdbTableProd:
+  OotdDdbTableProd:
     Type: AWS::DynamoDB::Table
     Condition: IsProd
     DeletionPolicy: Retain
