@@ -24,8 +24,8 @@ Parameters:
       - 'DEBUG'
 
 Conditions:
-  IsProd: !Equals [!Ref ResourceEnv, 'prod']
-  IsDev: !Equals [!Ref ResourceEnv, 'dev']
+  IsProd: !Equals [!Ref ServiceEnv, 'prod']
+  IsDev: !Equals [!Ref ServiceEnv, 'dev']
 
 Globals:
   Function:
