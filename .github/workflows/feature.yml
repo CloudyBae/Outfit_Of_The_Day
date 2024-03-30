@@ -46,4 +46,7 @@ jobs:
 
       - name: Sam deploy
         run: |
-          sam deploy --stack-name "ootd-dev" --no-fail-on-empty-changeset --parameter-overrides ResourceEnv="dev" ServiceEnv="dev"
+          branch_name="$GITHUB_REF_NAME"
+          github_branch_name=$(echo "$branch_name" | tr '/' '-')
+          echo "$github_branch_name"
+          sam deploy --stack-name "$github_branch_name" --no-fail-on-empty-changeset --parameter-overrides ResourceEnv="dev-feature" ServiceEnv="$github_branch_name"
