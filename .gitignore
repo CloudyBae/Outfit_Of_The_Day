@@ -1,3 +1,2 @@
-outfit_of_the_day.egg-info
-.vscode
-src/core/build
+src/core/outfit_of_the_day.egg-info/
+src/core/build/*
