@@ -1,4 +1,4 @@
-name: Prod Env
+name: Prod
 on:
   push:
     branches:
