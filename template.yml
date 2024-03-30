@@ -39,15 +39,6 @@ Globals:
         ServiceEnv: !Ref ServiceEnv
 
 Resources:
-###############
-#  S3 BUCKET  #
-###############
-
-  TripSageBucket:
-    Type: AWS::S3::Bucket
-    Condition: IsProd
-    Properties:
-      BucketName: !Sub ootd-bucket
 
 ###############
 #  DynamoDb  #
