@@ -1,4 +1,4 @@
-name: Dev Env - Feature, Hotfix, Bugfix
+name: Dev Feature - Feature, Hotfix, Bugfix
 on:
   push:
     branches-ignore:
