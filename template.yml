@@ -9,6 +9,7 @@ Parameters:
     AllowedValues:
       - 'dev'
       - 'prod'
+      - 'dev-feature'
 
   ServiceEnv:
     Description: 'Name of the service environment'
