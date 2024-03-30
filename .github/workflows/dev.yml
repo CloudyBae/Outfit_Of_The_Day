@@ -1,8 +1,8 @@
 name: Dev
 on:
   push:
-    branches-ignore:
-      - 'main'
+    branches:
+      - 'dev'
 
 jobs:
   test:
