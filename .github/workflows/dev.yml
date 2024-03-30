@@ -1,0 +1,52 @@
+name: Dev Env - Feature, Hotfix, Bugfix
+on:
+  push:
+    branches-ignore:
+      - 'main'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v3
+      
+      - name: cfn-lint
+        run: |
+          pip3 install cfn-lint
+          cfn-lint template.yml
+      
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+
+      - name: Set up sam
+        uses: aws-actions/setup-sam@v2
+      
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions-role
+          role-session-name: github-actions
+          aws-region: us-east-1
+      
+      - name: Sam build
+        run: sam build --use-container
+
+      - name: Sam deploy
+        run: |
+          branch_name="$GITHUB_REF_NAME"
+          github_branch_name=$(echo "$branch_name" | tr '/' '-')
+          echo "$github_branch_name"
+          sam deploy --stack-name "$github_branch_name" --no-fail-on-empty-changeset --parameter-overrides DeploymentEnv="dev-feature" ResourceEnv="dev" ServiceEnv="$github_branch_name"
