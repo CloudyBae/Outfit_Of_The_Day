@@ -1,9 +1,8 @@
-name: Dev Feature - Feature, Hotfix, Bugfix
+name: Dev Feature
 on:
   push:
     branches-ignore:
       - 'main'
-      - 'dev'
 
 jobs:
   test:
