@@ -1,0 +1,184 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: TripSage AWS resources
+
+Parameters:
+  ResourceEnv:
+    Description: 'Environment which the resources will be deployed to'
+    Type: 'String'
+    AllowedValues:
+      - 'dev'
+      - 'prod'
+
+  ServiceEnv:
+    Description: 'Name of the service environment'
+    Type: 'String'
+
+  LogLevel:
+    Description: "Log level for functions"
+    Type: String
+    Default: 'INFO'
+    AllowedValues:
+      - 'INFO'
+      - 'DEBUG'
+
+Conditions:
+  IsProd: !Equals [!Ref ResourceEnv, 'prod']
+  IsDev: !Equals [!Ref ResourceEnv, 'dev']
+
+Globals:
+  Function:
+    Runtime: python3.10
+    Timeout: 180
+    Environment:
+      Variables:
+        LOG_LEVEL:
+          Ref: LogLevel
+        ResourceEnv: !Ref ResourceEnv
+        ServiceEnv: !Ref ServiceEnv
+
+Resources:
+###############
+#  S3 BUCKET  #
+###############
+
+  TripSageBucket:
+    Type: AWS::S3::Bucket
+    Condition: IsProd
+    Properties:
+      BucketName: !Sub ootd-bucket
+
+###############
+#  DynamoDb  #
+###############
+  TripSageDdbTableDev:
+    Type: AWS::DynamoDB::Table
+    Condition: IsDev
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: Ootd-Dev
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+        - AttributeName: GSI1_PK
+          AttributeType: S
+        - AttributeName: GSI1_SK
+          AttributeType: S
+        - AttributeName: GSI2_PK
+          AttributeType: S
+        - AttributeName: GSI2_SK
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+        - IndexName: GSI1
+          KeySchema:
+            - AttributeName: GSI1_PK
+              KeyType: HASH
+            - AttributeName: GSI1_SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: GSI2
+          KeySchema:
+            - AttributeName: GSI2_PK
+              KeyType: HASH
+            - AttributeName: GSI2_SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+  TripSageDdbTableProd:
+    Type: AWS::DynamoDB::Table
+    Condition: IsProd
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: Ootd-Prod
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+        - AttributeName: GSI1_PK
+          AttributeType: S
+        - AttributeName: GSI1_SK
+          AttributeType: S
+        - AttributeName: GSI2_PK
+          AttributeType: S
+        - AttributeName: GSI2_SK
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+        - IndexName: GSI1
+          KeySchema:
+            - AttributeName: GSI1_PK
+              KeyType: HASH
+            - AttributeName: GSI1_SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: GSI2
+          KeySchema:
+            - AttributeName: GSI2_PK
+              KeyType: HASH
+            - AttributeName: GSI2_SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+#####################
+#  Parameter Store  #
+#####################
+
+  OotdDdbNameDev:
+    Type: AWS::SSM::Parameter
+    Condition: IsDev
+    Properties:
+      Description: Ootd DDB Name Dev
+      Name: !Sub "/Ootd/${ResourceEnv}/OotdDdbName"
+      Type: String
+      Value: !Ref OotdDdbTableDev
+
+  OotdDdbArnDev:
+    Type: AWS::SSM::Parameter
+    Condition: IsDev
+    Properties:
+      Description: Ootd DDB Arn Dev
+      Name: !Sub "/Ootd/${ResourceEnv}/OotdDdbArn"
+      Type: String
+      Value: !GetAtt OotdDdbTableDev.Arn
+
+  OotdDdbNameProd:
+    Type: AWS::SSM::Parameter
+    Condition: IsProd
+    Properties:
+      Description: Ootd DDB Name Prod
+      Name: !Sub "/Ootd/${ResourceEnv}/OotdDdbName"
+      Type: String
+      Value: !Ref OotdDdbTableProd
+
+  OotdDdbArnProd:
+    Type: AWS::SSM::Parameter
+    Condition: IsProd
+    Properties:
+      Description: Ootd DDB Name Prod
+      Name: !Sub "/Ootd/${ResourceEnv}/OotdDdbArn"
+      Type: String
+      Value: !GetAtt OotdDdbTableProd.Arn
+
+#############
+#  OUTPUTS  #
+#############
