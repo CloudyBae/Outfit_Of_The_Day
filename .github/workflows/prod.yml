@@ -15,7 +15,7 @@ jobs:
         run: |
           pip3 install cfn-lint
           cfn-lint template.yml
-      
+
   deploy:
     runs-on: ubuntu-latest
     needs: test
@@ -47,4 +47,4 @@ jobs:
 
       - name: Sam deploy
         run: |
-          sam deploy --stack-name "prod" --no-fail-on-empty-changeset --parameter-overrides DeploymentEnv="prod" ResourceEnv="prod" ServiceEnv="prod"
+          sam deploy --stack-name "ootd-prod" --no-fail-on-empty-changeset --parameter-overrides ResourceEnv="prod" ServiceEnv="prod"
