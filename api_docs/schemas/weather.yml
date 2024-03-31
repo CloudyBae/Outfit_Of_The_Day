@@ -5,9 +5,12 @@ properties:
   temperature:
       type: number
       description: The current temperature in Fahrenheit
+      example: 78
   humidity:
       type: number
-      description: The current humidity level
+      description: The current humidity level percentage
+      example: 65
   description:
       type: string
       description: Short description of the weather condition
+      example: "Partly cloudy"

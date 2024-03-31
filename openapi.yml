@@ -30,10 +30,3 @@ paths:
   /weather:
     get:
       $ref: "./api_docs/resources/retrieve_weather.yml"
-# components:
-#   parameters:
-#     $ref: "./api_docs/parameters_values.yml"
-#   schemas:
-#     $ref: "./api_docs/schemas_values.yml"
-#   responses:
-#     $ref: "./api_docs/responses_values.yml"
