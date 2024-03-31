@@ -1,6 +1,13 @@
 version: '3'
 
 tasks:
+  init:
+    desc: Initialize project
+    cmds:
+      - pip install pipenv
+      - pipenv install --dev
+      - pipenv shell
+
   bundle:
     desc: Bundle API documentation
     cmds:
