@@ -4,4 +4,4 @@ tasks:
   bundle:
     cmds:
       - npm install -g @redocly/cli
-      - swagger-cli bundle openapi.yaml -o api_docs/api.yml -t yaml
+      - swagger-cli bundle openapi.yml -o api_docs/api.yml -t yaml
