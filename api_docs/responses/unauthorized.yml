@@ -1,0 +1,5 @@
+description: unauthorized request
+content:
+  'application/json':
+    schema:
+      $ref: '../schemas/error.yml'

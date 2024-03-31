@@ -1,0 +1,13 @@
+parameters:
+  - name: city
+    in: path
+    required: true
+    schema:
+      type: string
+    description: The name of the city for which to retrieve weather information    
+  - name: country
+    in: path
+    required: true
+    schema:
+      type: string
+    description: The country code of the city (e.g., "US" for United States)

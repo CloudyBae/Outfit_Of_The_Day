@@ -39,6 +39,21 @@ Globals:
         ServiceEnv: !Ref ServiceEnv
 
 Resources:
+  RetrieveWeather:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: "Retrieve current weather information based on location"
+      CodeUri: src/handlers/retrieve_weather
+      Handler: function.handler
+      MemorySize: 128
+      Timeout: 60
+
+  RetrieveWeatherApiPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt RetrieveWeather.Arn
+      Principal: apigateway.amazonaws.com
 
 ###############
 #  REST API   #

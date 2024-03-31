@@ -1,0 +1,27 @@
+operationId: "RetrieveWeather"
+description: Retrieve current weather information based on location
+tags:
+  - Weather Information
+parameters:
+  - $ref: "../parameters_values.yml#/weather"
+responses:
+  '200':
+    description: Weather information retrieved successfully
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas_values.yml#/weather"
+  '400':
+    $ref: "../responses_values.yml#/badRequest"
+  '404':
+    $ref: "../responses_values.yml#/notFound"
+  '500':
+    $ref: "../responses_values.yml#/serverError"
+x-amazon-apigateway-request-validator: NONE
+x-amazon-apigateway-integration:
+  type: AWS_PROXY
+  httpMethod: POST
+  uri:
+    Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RetrieveWeather.Arn}/invocations"
+security:
+  - EndpointAuthorizer: ["api/get:all"]

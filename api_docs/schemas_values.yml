@@ -1,0 +1,2 @@
+weather:
+  $ref: "./schemas/weather.yml"

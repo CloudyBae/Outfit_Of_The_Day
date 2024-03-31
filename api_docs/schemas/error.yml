@@ -1,0 +1,9 @@
+title: Error
+type: object
+properties: 
+  error: 
+    type: string
+    description: Invalid Request
+  message: 
+    type: string
+    description: Invalid Request

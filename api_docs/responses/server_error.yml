@@ -1,0 +1,5 @@
+description: server side error
+content:
+  'application/json':
+    schema:
+      $ref: '../schemas/error.yml'

@@ -1,0 +1,13 @@
+title: Weather
+type: object
+additionalProperties: false
+properties:
+  temperature:
+      type: number
+      description: The current temperature in Fahrenheit
+  humidity:
+      type: number
+      description: The current humidity level
+  description:
+      type: string
+      description: Short description of the weather condition
