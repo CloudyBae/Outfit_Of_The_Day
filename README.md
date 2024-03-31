@@ -7,6 +7,6 @@ With the help of AI, you can plan outfits for any event, weather, mood, and pers
 - Python 3
 - Task
     - macOS or Linux (Homebrew)
-    'brew install go-task'
+    ```brew install go-task```
     - Windows (Chocolatey)
-    'choco install go-task'
+    ```choco install go-task```
