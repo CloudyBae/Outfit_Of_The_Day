@@ -45,6 +45,7 @@ Resources:
       LayerName: CoreLayer
       Description: Core layer for common functions
       ContentUri: src/core
+      RetentionPolicy: Delete
       CompatibleRuntimes:
         - python3.10
 
