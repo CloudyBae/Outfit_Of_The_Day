@@ -39,6 +39,15 @@ Globals:
         ServiceEnv: !Ref ServiceEnv
 
 Resources:
+  CoreLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: CoreLayer
+      Description: Core layer for common functions
+      ContentUri: src/core
+      CompatibleRuntimes:
+        - python3.10
+
   RetrieveWeather:
     Type: AWS::Serverless::Function
     Properties:

@@ -10,6 +10,7 @@ setup(
         'aws_lambda_powertools',
         'boto3',
         'botocore',
-        'dataclasses-json'
+        'dataclasses-json',
+        'requests'
     ]
 )
