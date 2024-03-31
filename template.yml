@@ -30,7 +30,8 @@ Conditions:
 Globals:
   Function:
     Runtime: python3.10
-    Timeout: 180
+    Timeout: 60
+    MemorySize: 128
     Environment:
       Variables:
         LOG_LEVEL:
@@ -48,6 +49,8 @@ Resources:
       RetentionPolicy: Delete
       CompatibleRuntimes:
         - python3.10
+    Metadata:
+      BuildMethod: makefile
 
   RetrieveWeather:
     Type: AWS::Serverless::Function
@@ -55,8 +58,6 @@ Resources:
       Description: "Retrieve current weather information based on location"
       CodeUri: src/handlers/retrieve_weather
       Handler: function.handler
-      MemorySize: 128
-      Timeout: 60
 
   RetrieveWeatherApiPermission:
     Type: AWS::Lambda::Permission
