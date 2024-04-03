@@ -2,8 +2,6 @@ operationId: "RetrieveWeather"
 description: Retrieve current weather information based on location
 tags:
   - Weather Information
-parameters:
-  - $ref: "../parameters_values.yml#/weather"
 responses:
   '200':
     description: Weather information retrieved successfully

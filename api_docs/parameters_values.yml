@@ -1,2 +1,0 @@
-weather:
-  $ref: "./parameters/paths/weather.yml"
