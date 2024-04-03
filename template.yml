@@ -50,7 +50,7 @@ Resources:
       CompatibleRuntimes:
         - python3.10
     Metadata:
-      BuildMethod: makefile
+      BuildMethod: python3.10
 
   RetrieveWeather:
     Type: AWS::Serverless::Function
