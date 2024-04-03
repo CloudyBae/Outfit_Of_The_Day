@@ -21,11 +21,11 @@ class DdbTable:
 
 
     @cache    
-    def _table(self):
+    def table(self):
         return self.table   
 
 
-    def _put_item(self, item):
+    def put_item(self, item):
         try:
             self._table().put_item(item)
 
