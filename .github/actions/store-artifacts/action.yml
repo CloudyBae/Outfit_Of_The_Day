@@ -12,7 +12,9 @@ runs:
       id: artifact-name
       shell: bash
       run: |
-        name="${{ github.ref_name }}-${{ github.run_number }}-${{ github.sha }}"
+        branch_name="${{ github.ref }}"
+        name=$(echo "${ branch_name }" | tr '/' '-')
+        name="${ name }-${{ github.run_number }}-${{ github.sha }}"
         echo "artifact-name=$name" >> "$GITHUB_OUTPUT"
 
     - name: Store aftifact
