@@ -1,4 +1,4 @@
 src/core/outfit_of_the_day.egg-info/
 src/core/build/*
-designs/*
+.designs/*
 redoc-static.html

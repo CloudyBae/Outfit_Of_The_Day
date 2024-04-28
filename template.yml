@@ -29,7 +29,7 @@ Conditions:
 
 Globals:
   Function:
-    Runtime: python3.10
+    Runtime: python3.12
     Timeout: 60
     MemorySize: 128
     Environment:
@@ -44,20 +44,20 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: CoreLayer
-      Description: Core layer for common functions
+      Description: Core layer for shared code used by all external resources
       ContentUri: src/core
       RetentionPolicy: Delete
       CompatibleRuntimes:
-        - python3.10
+        - python3.12
     Metadata:
-      BuildMethod: python3.10
+      BuildMethod: python3.12
 
   RetrieveWeather:
     Type: AWS::Serverless::Function
     Properties:
       Description: "Retrieve current weather information based on location"
       CodeUri: src/handlers/retrieve_weather
-      Handler: function.handler
+      Handler: function.lambda_handler
 
   RetrieveWeatherApiPermission:
     Type: AWS::Lambda::Permission
