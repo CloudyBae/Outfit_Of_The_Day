@@ -33,3 +33,5 @@ runs:
 
     - name: Dependencies
       if: steps.pipfile-lock.outputs.lock != 'true' || steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: pipenv install --dev
