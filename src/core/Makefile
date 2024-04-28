@@ -1,4 +1,5 @@
 build-CoreLayer:
-  mkdir -p "$(ARTIFACTS_DIR)/python"
-  cp *.py "$(ARTIFACTS_DIR)/python"
-  python -m pip install -r requirements.txt -t "$(ARTIFACTS_DIR)/python"
+	python3.12 ./setup.py build
+	pip3.12 wheel -w tmp -e
+	mkdir $(ARTIFACTS_DIR)/python
+	pip3.10 install tmp/core-* --target $(ARTIFACTS_DIR)/python/
