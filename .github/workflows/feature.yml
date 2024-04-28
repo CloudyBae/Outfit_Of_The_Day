@@ -7,6 +7,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout Git repository
         uses: actions/checkout@v3
@@ -24,10 +27,10 @@ jobs:
       contents: read
     steps:
       - name: Setup
-        uses: ./.github/actions/setup
+        uses: ./actions/setup
 
       - name: Set up Python
-        uses: ./.github/actions/setup-python
+        uses: ./actions/setup-python
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -52,7 +55,7 @@ jobs:
       #   run: sam build --use-container
 
       - name: Store artifacts
-        uses: ./.github/actions/store-artifacts
+        uses: ./actions/store-artifacts
 
 
       # - name: Sam deploy
