@@ -38,8 +38,7 @@ jobs:
         id: artifact-name
         shell: bash
         run: |
-          branch_name="$GITHUB_REF_NAME"
-          name="${{ branch_name }}-${{ github.run_number }}-${{ github.sha }}"
+          name="${{ github.ref }}-${{ github.run_number }}-${{ github.sha }}"
           echo "artifact-name=$name" >> $GITHUB_OUTPUT
 
       - name: Download artifact
