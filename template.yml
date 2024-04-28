@@ -57,7 +57,7 @@ Resources:
     Properties:
       Description: "Retrieve current weather information based on location"
       CodeUri: src/handlers/retrieve_weather
-      Handler: function.lambda_handler
+      Handler: function.handler
 
   RetrieveWeatherApiPermission:
     Type: AWS::Lambda::Permission

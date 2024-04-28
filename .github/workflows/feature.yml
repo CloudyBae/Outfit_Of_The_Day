@@ -44,6 +44,9 @@ jobs:
       - name: Sam build
         run: sam build --use-container
 
+      - name: List files in build directory
+        run: ls -l .aws-sam/build
+
       - name: Sam deploy
         run: |
           branch_name="$GITHUB_REF_NAME"
