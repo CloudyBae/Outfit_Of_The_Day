@@ -31,6 +31,9 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install setuptools
+        run: pip3.10 install setuptools
+
       - name: Set up sam
         uses: aws-actions/setup-sam@v2
       
