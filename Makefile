@@ -1,4 +1,4 @@
-SAM_TEMPLATE != template.yml
+SAM_TEMPLATE ?= template.yml
 
 validate:
 	@sam validate --lint
