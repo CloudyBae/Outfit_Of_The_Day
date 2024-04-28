@@ -13,8 +13,8 @@ runs:
       shell: bash
       run: |
         branch_name="${{ github.ref }}"
-        name=$(echo "${ branch_name }" | tr '/' '-')
-        name="${ name }-${{ github.run_number }}-${{ github.sha }}"
+        github_branch_name=$(echo "$branch_name" | tr '/' '-')
+        name="$github_branch_name-${{ github.run_number }}-${{ github.sha }}"
         echo "artifact-name=$name" >> "$GITHUB_OUTPUT"
 
     - name: Store aftifact
