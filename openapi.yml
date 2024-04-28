@@ -27,6 +27,6 @@ x-amazon-apigateway-gateway-responses:
           "error": $context.error.messageString
         }
 paths:
-  /weather:
-    get:
-      $ref: "./api_docs/resources/retrieve_weather.yml"
+  # /weather:
+  #   get:
+  #     $ref: "./api_docs/resources/retrieve_weather.yml"

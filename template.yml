@@ -69,16 +69,16 @@ Resources:
 ###############
 #  REST API   #
 ###############
-  # OotdApi:
-  #   Type: AWS::Serverless::Api
-  #   Properties:
-  #     StageName: api
-  #     Name: !Sub 'Ootd-${ServiceEnv}'
-  #     DefinitionBody:
-  #       Fn::Transform:
-  #         Name: AWS::Include
-  #         Parameters:
-  #           Location: api_docs/api.yml
+  OotdApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: api
+      Name: !Sub 'Ootd-${ServiceEnv}'
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: api_docs/api.yml
 
 ###############
 #  DynamoDb  #
