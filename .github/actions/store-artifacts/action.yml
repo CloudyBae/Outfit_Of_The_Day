@@ -15,9 +15,8 @@ runs:
       id: artifact-name
       shell: bash
       run: |
-        name="${{ GITHUB_REF_NAME }}-${{ github.run_number }}-${{ github.sha }}";
-        fi;
-        echo "artifact-name=$name" >> $GITHUB_OUTPUT
+        name="${{ github.ref_name }}-${{ github.run_number }}-${{ github.sha }}"
+        echo "artifact-name=$name" >> "$GITHUB_OUTPUT"
 
     - name: Store aftifact
       uses: actions/upload-artifact@v3
