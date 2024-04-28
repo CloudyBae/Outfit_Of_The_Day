@@ -14,6 +14,6 @@ parallel = true
 
 [default.deploy]
 [default.deploy.parameters]
-capabilities="CAPABILITY_NAMED_IAM"
+capabilities="CAPABILITY_IAM"
 region="us-east-1"
 confirm_changeset = false
