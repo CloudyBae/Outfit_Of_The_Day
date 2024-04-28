@@ -39,48 +39,13 @@ paths:
           content:
             application/json:
               schema:
-                title: Weather
-                type: object
-                additionalProperties: false
-                properties:
-                  temperature:
-                    type: number
-                    description: The current temperature in Fahrenheit
-                    example: 78
-                  humidity:
-                    type: number
-                    description: The current humidity level percentage
-                    example: 65
-                  description:
-                    type: string
-                    description: Short description of the weather condition
-                    example: Partly cloudy
+                $ref: '#/components/schemas/weather'
         '400':
-          description: bad request by user
-          content:
-            application/json:
-              schema:
-                title: Error
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Invalid Request
-                  message:
-                    type: string
-                    description: Invalid Request
+          $ref: '#/components/responses/badRequest'
         '404':
-          description: resource not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/paths/~1weather/get/responses/400/content/application~1json/schema'
+          $ref: '#/components/responses/notFound'
         '500':
-          description: server side error
-          content:
-            application/json:
-              schema:
-                $ref: '#/paths/~1weather/get/responses/400/content/application~1json/schema'
+          $ref: '#/components/responses/serverError'
       x-amazon-apigateway-request-validator: NONE
       x-amazon-apigateway-integration:
         type: AWS_PROXY
@@ -90,3 +55,55 @@ paths:
       security:
         - EndpointAuthorizer:
             - 'api/get:all'
+components:
+  schemas:
+    weather:
+      title: Weather
+      type: object
+      additionalProperties: false
+      properties:
+        temperature:
+          type: number
+          description: The current temperature in Fahrenheit
+          example: 78
+        humidity:
+          type: number
+          description: The current humidity level percentage
+          example: 65
+        description:
+          type: string
+          description: Short description of the weather condition
+          example: Partly cloudy
+  responses:
+    badRequest:
+      description: bad request by user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/responses/notFound/content/application~1json/schema'
+    unauthorized:
+      description: unauthorized request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/responses/notFound/content/application~1json/schema'
+    notFound:
+      description: resource not found
+      content:
+        application/json:
+          schema:
+            title: Error
+            type: object
+            properties:
+              error:
+                type: string
+                description: Invalid Request
+              message:
+                type: string
+                description: Invalid Request
+    serverError:
+      description: server side error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/responses/notFound/content/application~1json/schema'
