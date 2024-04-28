@@ -26,11 +26,16 @@ jobs:
       id-token: write
       contents: read
     steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Setup
         uses: ./actions/setup
 
       - name: Set up Python
-        uses: ./actions/setup-python
+        uses: ./.github/actions/setup-python
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -55,7 +60,7 @@ jobs:
       #   run: sam build --use-container
 
       - name: Store artifacts
-        uses: ./actions/store-artifacts
+        uses: ./.github/actions/store-artifacts
 
 
       # - name: Sam deploy
