@@ -18,9 +18,9 @@ runs:
       run: |
         if [ -f Pipfile.lock ]; \
         then \
-          echo "lock=true" >> $GITHUB_OUTPUT; \
+          echo "lock=true" >> "$GITHUB_OUTPUT"; \
         else \
-          echo "lock=false" >> $GITHUB_OUTPUT; \
+          echo "lock=false" >> "$GITHUB_OUTPUT"; \
         fi
 
     - name: Cache
