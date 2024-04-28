@@ -26,4 +26,67 @@ x-amazon-apigateway-gateway-responses:
         {
           "error": $context.error.messageString
         }
-paths: null
+paths:
+  /weather:
+    get:
+      operationId: RetrieveWeather
+      description: Retrieve current weather information based on location
+      tags:
+        - Weather Information
+      responses:
+        '200':
+          description: Weather information retrieved successfully
+          content:
+            application/json:
+              schema:
+                title: Weather
+                type: object
+                additionalProperties: false
+                properties:
+                  temperature:
+                    type: number
+                    description: The current temperature in Fahrenheit
+                    example: 78
+                  humidity:
+                    type: number
+                    description: The current humidity level percentage
+                    example: 65
+                  description:
+                    type: string
+                    description: Short description of the weather condition
+                    example: Partly cloudy
+        '400':
+          description: bad request by user
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Invalid Request
+                  message:
+                    type: string
+                    description: Invalid Request
+        '404':
+          description: resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1weather/get/responses/400/content/application~1json/schema'
+        '500':
+          description: server side error
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1weather/get/responses/400/content/application~1json/schema'
+      x-amazon-apigateway-request-validator: NONE
+      x-amazon-apigateway-integration:
+        type: AWS_PROXY
+        httpMethod: POST
+        uri:
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RetrieveWeather.Arn}/invocations'
+      security:
+        - EndpointAuthorizer:
+            - 'api/get:all'
