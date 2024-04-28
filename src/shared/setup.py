@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='core',
+    name='shared',
     version='0.0.1',
     python_requires='>=3.10.0',
     packages=find_packages(exclude=['tests.*', 'tests']),

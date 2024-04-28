@@ -12,7 +12,7 @@ tasks:
     desc: Bundle API documentation
     cmds:
       - npm install -g @redocly/cli
-      - swagger-cli bundle openapi.yml -o api_docs/api.yml -t yaml
+      - redocly bundle openapi.yml -o api_docs/api.yml --ext yaml
 
   api:
     desc: Create API documentation

@@ -3,29 +3,17 @@ info:
   version: 1.0.0
   title: Outfit Of The Day
   description: Outfit Of The Day API Documentation
-  termsOfService: 'http://swagger.io/terms/'
-  contact:
-    name: Yoon
-    email: baeyoojindev@gmail.com
+  termsOfService: http://swagger.io/terms/
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: 'https://ootd/api'
+  - url: https://ootd/api
 tags:
   - name: User Profile Management
     description: Operations for user profiles
   - name: Weather Information
     description: Retrieve weather information
-x-amazon-apigateway-request-validators:
-  all:
-    validateRequestBody: true
-    validateRequestParameters: true
-x-amazon-apigateway-gateway-responses:
-  BAD_REQUEST_BODY:
-    statusCode: 400
-    responseTemplates:
-      application/json: |
-        {
-          "error": $context.error.messageString
-        }
 paths:
   /weather:
     get:
@@ -41,20 +29,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/weather'
         '400':
-          $ref: '#/components/responses/badRequest'
+          $ref: '#/components/responses/bad_request'
         '404':
-          $ref: '#/components/responses/notFound'
+          $ref: '#/components/responses/not_found'
         '500':
-          $ref: '#/components/responses/serverError'
+          $ref: '#/components/responses/server_error'
       x-amazon-apigateway-request-validator: NONE
       x-amazon-apigateway-integration:
         type: AWS_PROXY
         httpMethod: POST
         uri:
-          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RetrieveWeather.Arn}/invocations'
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${RetrieveWeather.Arn}/invocations
       security:
         - EndpointAuthorizer:
-            - 'api/get:all'
+            - api/get:all
 components:
   schemas:
     weather:
@@ -74,36 +62,56 @@ components:
           type: string
           description: Short description of the weather condition
           example: Partly cloudy
+    error:
+      title: Error
+      type: object
+      properties:
+        error:
+          type: string
+          description: Invalid Request
+        message:
+          type: string
+          description: Invalid Request
   responses:
-    badRequest:
+    bad_request:
       description: bad request by user
       content:
         application/json:
           schema:
-            $ref: '#/components/responses/notFound/content/application~1json/schema'
+            $ref: '#/components/schemas/error'
+    not_found:
+      description: resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+    server_error:
+      description: server side error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
     unauthorized:
       description: unauthorized request
       content:
         application/json:
           schema:
-            $ref: '#/components/responses/notFound/content/application~1json/schema'
+            $ref: '#/components/schemas/error'
+    badRequest:
+      $ref: '#/components/responses/bad_request'
     notFound:
-      description: resource not found
-      content:
-        application/json:
-          schema:
-            title: Error
-            type: object
-            properties:
-              error:
-                type: string
-                description: Invalid Request
-              message:
-                type: string
-                description: Invalid Request
+      $ref: '#/components/responses/not_found'
     serverError:
-      description: server side error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/responses/notFound/content/application~1json/schema'
+      $ref: '#/components/responses/server_error'
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+x-amazon-apigateway-gateway-responses:
+  BAD_REQUEST_BODY:
+    statusCode: 400
+    responseTemplates:
+      application/json: |
+        {
+          "error": $context.error.messageString
+        }

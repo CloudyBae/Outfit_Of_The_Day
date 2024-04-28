@@ -1,0 +1,30 @@
+name: Store artifacts
+
+runs:
+  using: composite
+  steps:
+    - name: Upload
+      shell: bash
+      run: |
+        sam package \
+          --resolve-s3 \
+          --region 'us-east-1'
+          --output-template-file package-template.yaml
+
+    - name: Artifact name
+      id: artifact-name
+      shell: bash
+      run: |
+        name="${{ GITHUB_REF_NAME }}-${{ github.run_number }}-${{ github.sha }}";
+        fi;
+        echo "artifact-name=$name" >> $GITHUB_OUTPUT
+
+    - name: Store aftifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ steps.artifact-name.outputs.artifact-name }}
+        path: |
+          **/*
+          !.aws-sam/build
+          !.git
+        retention-days: 7 

@@ -38,12 +38,12 @@ Globals:
         ServiceEnv: !Ref ServiceEnv
 
 Resources:
-  CoreLayer:
+  SharedLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: !Sub "${AWS::StackName}-${ServiceEnv}-CoreLayer"
       Description: Core layer for shared code used by all external resources
-      ContentUri: src/core
+      ContentUri: src/shared
       RetentionPolicy: Delete
       CompatibleRuntimes:
         - python3.10
@@ -54,7 +54,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Description: "Retrieve current weather information based on location"
-      CodeUri: src/handlers/retrieve_weather
+      CodeUri: src/handlers/retrieve_weather/
       Handler: function.handler
       Layers:
         - !Ref CoreLayer
@@ -78,9 +78,9 @@ Resources:
       Name: !Sub 'Ootd-${ServiceEnv}'
       DefinitionBody:
         Fn::Transform:
-          Name: AWS::Include
+          Name: "AWS::Include"
           Parameters:
-            Location: api_docs/api.yml
+            Location: "api_docs/api.yaml"
 
 ###############
 #  DynamoDb  #

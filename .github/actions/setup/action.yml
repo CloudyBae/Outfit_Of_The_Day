@@ -1,0 +1,20 @@
+name: Setup
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Get artifact name
+      id: artifact-name
+      shell: bash
+      run: |
+        name="${{ GITHUB_REF_NAME }}-${{ github.run_number }}-${{ github.sha }}";
+        fi;
+        echo "artifact-name=$name" >> $GITHUB_OUTPUT
+
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ steps.artifact-name.outputs.artifact-name }}

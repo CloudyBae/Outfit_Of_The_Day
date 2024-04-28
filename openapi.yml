@@ -4,9 +4,9 @@ info:
   title: Outfit Of The Day
   description: Outfit Of The Day API Documentation
   termsOfService: http://swagger.io/terms/
-  contact:
-    name: Yoon
-    email: baeyoojindev@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 servers:
   - url: https://ootd/api
 tags:

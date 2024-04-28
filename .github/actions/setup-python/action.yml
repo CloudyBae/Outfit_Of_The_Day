@@ -1,0 +1,35 @@
+name: Setup Python
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+
+    - name: Install pipenv
+      shell: bash
+      run: python -m pip install --upgrade pipenv wheel
+
+    - name: Pipfile.lock
+      id: pipfile-lock
+      shell: bash
+      run: |
+        if [ -f Pipfile.lock ]; \
+        then \
+          echo "lock=true" >> $GITHUB_OUTPUT; \
+        else \
+          echo "lock=false" >> $GITHUB_OUTPUT; \
+        fi
+
+    - name: Cache
+      id: cache
+      uses: actions/cache@v3
+      if: steps.pipfile-lock.outputs.lock == 'true'
+      with:
+        path: ~/.local/share/virtualenvs
+        key: python-3.10-pipenv-${{ hashFiles('Pipfile.lock') }}-${{ runner.os }}-${{ runner.arch }}
+
+    - name: Dependencies
+      if: steps.pipfile-lock.outputs.lock != 'true' || steps.cache.outputs.cache-hit != 'true'

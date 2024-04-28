@@ -2,3 +2,17 @@ src/core/build/*
 .designs/*
 redoc-static.html
 src/core/dist/
+__pycache__/
+build/
+dist/
+develop-eggs/
+eggs/
+.eggs/
+*.egg-info/
+*.egg
+lib/
+MANIFEST
+.venv
+.env
+.vscode/
+.settings/
