@@ -52,19 +52,19 @@ Resources:
     Metadata:
       BuildMethod: makefile
 
-  RetrieveWeather:
-    Type: AWS::Serverless::Function
-    Properties:
-      Description: "Retrieve current weather information based on location"
-      CodeUri: src/handlers/retrieve_weather
-      Handler: function.handler
+  # RetrieveWeather:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Description: "Retrieve current weather information based on location"
+  #     CodeUri: src/handlers/retrieve_weather
+  #     Handler: function.handler
 
-  RetrieveWeatherApiPermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !GetAtt RetrieveWeather.Arn
-      Principal: apigateway.amazonaws.com
+  # RetrieveWeatherApiPermission:
+  #   Type: AWS::Lambda::Permission
+  #   Properties:
+  #     Action: lambda:InvokeFunction
+  #     FunctionName: !GetAtt RetrieveWeather.Arn
+  #     Principal: apigateway.amazonaws.com
 
 ###############
 #  REST API   #
