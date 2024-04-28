@@ -57,7 +57,7 @@ Resources:
       CodeUri: src/handlers/retrieve_weather/
       Handler: function.handler
       Layers:
-        - !Ref CoreLayer
+        - !Ref SharedLayer
       Timeout: 60
       MemorySize: 128
 
