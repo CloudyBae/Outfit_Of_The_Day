@@ -11,7 +11,7 @@ setup(
         'boto3',
         'botocore',
         'dataclasses-json',
-        'requests'
+        'pyyaml'
     ],
     classifiers=[
         'Environment :: Console',

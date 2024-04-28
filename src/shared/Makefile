@@ -1,4 +1,4 @@
-build-CoreLayer:
+build-SharedLayer:
 	python3.10 ./setup.py build
 	pip3.10 wheel -w tmp -e .
 	mkdir $(ARTIFACTS_DIR)/python

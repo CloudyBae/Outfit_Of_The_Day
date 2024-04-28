@@ -41,8 +41,7 @@ Resources:
   SharedLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: !Sub "${AWS::StackName}-${ServiceEnv}-CoreLayer"
-      Description: Core layer for shared code used by all external resources
+      LayerName: !Sub "${AWS::StackName}-${ServiceEnv}-SharedLayer"
       ContentUri: src/shared
       RetentionPolicy: Delete
       CompatibleRuntimes:
