@@ -31,8 +31,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      # - name: Setup
+      #   uses: ./.github/actions/setup
+
+      - name: Get artifact name
+        id: artifact-name
+        shell: bash
+        run: |
+          name="${{ GITHUB_REF_NAME }}-${{ github.run_number }}-${{ github.sha }}"
+          echo "artifact-name=$name" >> $GITHUB_OUTPUT
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ steps.artifact-name.outputs.artifact-name }}
 
       - name: Set up Python
         uses: ./.github/actions/setup-python
