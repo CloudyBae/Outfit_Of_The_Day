@@ -32,7 +32,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup
-        uses: ./actions/setup
+        uses: ./.github/actions/setup
 
       - name: Set up Python
         uses: ./.github/actions/setup-python
