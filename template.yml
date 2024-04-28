@@ -30,8 +30,6 @@ Conditions:
 Globals:
   Function:
     Runtime: python3.10
-    Timeout: 60
-    MemorySize: 128
     Environment:
       Variables:
         LOG_LEVEL:
@@ -58,6 +56,10 @@ Resources:
       Description: "Retrieve current weather information based on location"
       CodeUri: src/handlers/retrieve_weather
       Handler: function.handler
+      Layers:
+        - !Ref CoreLayer
+      Timeout: 60
+      MemorySize: 128
 
   RetrieveWeatherApiPermission:
     Type: AWS::Lambda::Permission
