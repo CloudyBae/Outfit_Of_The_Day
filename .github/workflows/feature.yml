@@ -15,6 +15,11 @@ jobs:
         run: |
           pip3 install cfn-lint
           cfn-lint template.yml
+
+      - name: Validate OpenAPI definition
+        uses: char0n/swagger-editor-validate@v1
+        with:
+          definition-file: api_docs/api.yaml
       
   deploy:
     runs-on: ubuntu-latest

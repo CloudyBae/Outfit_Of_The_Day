@@ -41,7 +41,7 @@ Resources:
   CoreLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: !Sub "${ServiceEnv}-CoreLayer"
+      LayerName: !Sub "${AWS::StackName}-${ServiceEnv}-CoreLayer"
       Description: Core layer for shared code used by all external resources
       ContentUri: src/core
       RetentionPolicy: Delete
