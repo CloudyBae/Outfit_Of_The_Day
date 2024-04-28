@@ -10,8 +10,7 @@ runs:
       id: artifact-name
       shell: bash
       run: |
-        name="${{ GITHUB_REF_NAME }}-${{ github.run_number }}-${{ github.sha }}";
-        fi;
+        name="${{ GITHUB_REF_NAME }}-${{ github.run_number }}-${{ github.sha }}"
         echo "artifact-name=$name" >> $GITHUB_OUTPUT
 
     - name: Download artifact
