@@ -31,21 +31,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: Setup
-      #   uses: ./.github/actions/setup
-
-      - name: Get artifact name
-        id: artifact-name
-        shell: bash
-        run: |
-          name="${{ github.ref_name }}-${{ github.run_number }}-${{ github.sha }}"
-          echo "artifact-name=$name" >> "$GITHUB_OUTPUT"
-
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ steps.artifact-name.outputs.artifact-name }}
-
       - name: Set up Python
         uses: ./.github/actions/setup-python
 
@@ -82,3 +67,17 @@ jobs:
       #     github_branch_name=$(echo "$branch_name" | tr '/' '-')
       #     echo "$github_branch_name"
       #     sam deploy --stack-name "$github_branch_name" --no-fail-on-empty-changeset --parameter-overrides ResourceEnv="dev" ServiceEnv="$github_branch_name"
+
+
+
+      # - name: Get artifact name
+      #   id: artifact-name
+      #   shell: bash
+      #   run: |
+      #     name="${{ github.ref_name }}-${{ github.run_number }}-${{ github.sha }}"
+      #     echo "artifact-name=$name" >> "$GITHUB_OUTPUT"
+
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: ${{ steps.artifact-name.outputs.artifact-name }}
