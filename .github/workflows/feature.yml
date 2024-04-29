@@ -4,23 +4,8 @@ on:
     branches-ignore:
       - 'main'
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Checkout Git repository
-        uses: actions/checkout@v3
-      
-      - name: cfn-lint
-        run: |
-          pip3 install cfn-lint
-          cfn-lint template.yml
-      
-  build:
-    needs: test
+jobs:     
+  test-and-build:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -41,7 +26,7 @@ jobs:
           role-session-name: github-actions
           aws-region: us-east-1
 
-      - name: Set up sam
+      - name: Set up Sam
         uses: aws-actions/setup-sam@v2
         with:
           use-installer: true
@@ -53,31 +38,58 @@ jobs:
       - name: Build artifact
         run: make build
       
-      # - name: Sam build
-      #   run: sam build --use-container
+      # - name: Unit Test
+      #   run: make test
 
       - name: Store artifacts
         uses: ./.github/actions/store-artifacts
 
+  deploy:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      # - name: Sam deploy
-      #   shell: bash
-      #   run: |
-      #     branch_name="$GITHUB_REF_NAME"
-      #     github_branch_name=$(echo "$branch_name" | tr '/' '-')
-      #     echo "$github_branch_name"
-      #     sam deploy --stack-name "$github_branch_name" --no-fail-on-empty-changeset --parameter-overrides ResourceEnv="dev" ServiceEnv="$github_branch_name"
+      - name: Get artifact name
+        id: artifact-name
+        shell: bash
+        run: |
+          branch_name="${{ github.ref }}"
+          github_branch_name=$(echo "$branch_name" | tr '/' '-')
+          name="$github_branch_name-${{ github.run_number }}-${{ github.sha }}"
+          echo "artifact-name=$name" >> "$GITHUB_OUTPUT"
 
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ steps.artifact-name.outputs.artifact-name }}
 
+      - name: Set up Python
+        uses: ./.github/actions/setup-python
 
-      # - name: Get artifact name
-      #   id: artifact-name
-      #   shell: bash
-      #   run: |
-      #     name="${{ github.ref_name }}-${{ github.run_number }}-${{ github.sha }}"
-      #     echo "artifact-name=$name" >> "$GITHUB_OUTPUT"
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions-role
+          role-session-name: github-actions
+          aws-region: us-east-1
 
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: ${{ steps.artifact-name.outputs.artifact-name }}
+      - name: Set up Sam
+        uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sam deploy
+        shell: bash
+        run: |
+          branch_name="$GITHUB_REF_NAME"
+          github_branch_name=$(echo "$branch_name" | tr '/' '-')
+          echo "$github_branch_name"
+          sam deploy --stack-name "$github_branch_name" --no-fail-on-empty-changeset --parameter-overrides ResourceEnv="dev" ServiceEnv="$github_branch_name"
