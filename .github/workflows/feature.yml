@@ -99,6 +99,7 @@ jobs:
           SAM_TEMPLATE: packaged-template.yaml
           RESOURCE_ENV: "dev"
           DEPLOY_ENV: ${{ steps.github-branch.outputs.github_branch_name }}
+          STACK_NAME: ${{ steps.github-branch.outputs.github_branch_name }}
         shell: bash
         run: make deploy
 
