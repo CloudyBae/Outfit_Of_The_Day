@@ -53,7 +53,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Description: "Retrieve current weather information based on location"
-      CodeUri: src/handlers/retrieve_weather/
+      CodeUri: src/handlers/retrieve_weather
       Handler: function.handler
       Layers:
         - !Ref SharedLayer
