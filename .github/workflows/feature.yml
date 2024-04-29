@@ -60,7 +60,6 @@ jobs:
         id: artifact-name
         shell: bash
         run: |
-          if [ ]
           branch_name="${{ github.ref }}"
           github_branch_name=$(echo "$branch_name" | tr '/' '-')
           name="$github_branch_name-${{ github.run_number }}-${{ github.sha }}"
