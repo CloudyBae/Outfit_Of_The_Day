@@ -14,7 +14,7 @@ runs:
       id: artifact-name
       shell: bash
       run: |
-        branch_name="${{ github.ref }}"
+        branch_name="${{ github.ref_name }}"
         github_branch_name=$(echo "$branch_name" | tr '/' '-')
         name="$github_branch_name-${{ github.run_number }}-${{ github.sha }}"
         echo "artifact-name=$name" >> "$GITHUB_OUTPUT"

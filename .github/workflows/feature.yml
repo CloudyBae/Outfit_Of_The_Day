@@ -85,11 +85,27 @@ jobs:
         with:
           use-installer: true
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Sam deploy
+      
+      - name: Get branch name
+        id: github-branch
         shell: bash
         run: |
-          branch_name="$GITHUB_REF_NAME"
+          branch_name="${{ github.ref_name }}"
           github_branch_name=$(echo "$branch_name" | tr '/' '-')
-          echo "$github_branch_name"
-          sam deploy --stack-name "$github_branch_name" --no-fail-on-empty-changeset --parameter-overrides ResourceEnv="dev" ServiceEnv="$github_branch_name"
+          echo "github_branch_name=$name" >> "$GITHUB_OUTPUT"
+
+      - name: Sam deploy
+        env:
+          SAM_TEMPLATE: packaged-template.yaml
+          RESOURCE_ENV: "dev"
+          DEPLOY_ENV: ${{ steps.github-branch.outputs.github_branch_name }}
+        shell: bash
+        run: make deploy
+
+      # - name: Sam deploy
+      #   shell: bash
+      #   run: |
+      #     branch_name="$GITHUB_REF_NAME"
+      #     github_branch_name=$(echo "$branch_name" | tr '/' '-')
+      #     echo "$github_branch_name"
+      #     sam deploy --stack-name "$github_branch_name" --no-fail-on-empty-changeset --parameter-overrides ResourceEnv="dev" ServiceEnv="$github_branch_name"

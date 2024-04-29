@@ -1,18 +1,8 @@
 version = 0.1
 [default]
-[default.global]
-[default.global.parameters]
-region="us-east-1"
-output_template_file="packaged.yml"
-template_file="template.yml"
-
-[default.build]
-[default.build.parameters]
-cached = true
-parallel = true
 
 [default.deploy]
+
 [default.deploy.parameters]
 capabilities="CAPABILITY_IAM"
-region="us-east-1"
 confirm_changeset = false
