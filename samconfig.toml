@@ -3,7 +3,6 @@ version = 0.1
 [default.global]
 [default.global.parameters]
 region="us-east-1"
-s3_bucket="ootd-sam-bucket"
 output_template_file="packaged.yml"
 template_file="template.yml"
 
