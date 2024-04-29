@@ -15,7 +15,7 @@ deploy:
 		--resolve-s3 \
 		--no-fail-on-empty-changeset \
 		--template-file $(SAM_TEMPLATE)
-		--stack-name $(STACKNAME)
+		--stack-name $(STACKNAME) \
 		--tags \
 			DeploymentEnv=$(DEPLOY_ENV) \
 			StackName=$(STACKNAME) \
