@@ -1,7 +1,7 @@
 SAM_TEMPLATE ?= template.yml
 AWS_REGION ?= 'us-east-1'
 DEPLOY_ENV ?= unknown
-STACKNAME ?= ${USER}
+STACKNAME ?= 'ootd'
 
 validate:
 	@sam validate --lint
