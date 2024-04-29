@@ -6,7 +6,9 @@ runs:
     - name: Upload
       shell: bash
       run: |
-        sam package
+        sam package \
+        --resolve-s3 \
+        --s3-prefix "ootd-sam-bucket"
 
     - name: Artifact name
       id: artifact-name
