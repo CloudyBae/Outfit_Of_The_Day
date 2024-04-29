@@ -1,7 +1,6 @@
 SAM_TEMPLATE ?= template.yml
 AWS_REGION ?= 'us-east-1'
 DEPLOY_ENV ?= unknown
-STACKNAME ?= ootd
 
 validate:
 	@sam validate --lint
@@ -15,11 +14,9 @@ deploy:
 		--resolve-s3 \
 		--no-fail-on-empty-changeset \
 		--template-file $(SAM_TEMPLATE)
-		--stack-name $(STACKNAME) \
+		--stack-name $(DEPLOY_ENV) \
 		--tags \
 			DeploymentEnv=$(DEPLOY_ENV) \
-			StackName=$(STACKNAME) \
 		--parameter-overrides \
 			ServiceEnv=$(DEPLOY_ENV) \
-			ResourceEnv=$(RESOURCE_ENV) \
-			StackName=$(STACKNAME)
+			ResourceEnv=$(RESOURCE_ENV)
