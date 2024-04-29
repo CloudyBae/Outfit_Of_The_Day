@@ -22,4 +22,4 @@ deploy:
 		--parameter-overrides \
 			ServiceEnv=$(DEPLOY_ENV) \
 			ResourceEnv=$(RESOURCE_ENV) \
-			StackName=$(STACKNAME) \
+			StackName=$(STACKNAME)
